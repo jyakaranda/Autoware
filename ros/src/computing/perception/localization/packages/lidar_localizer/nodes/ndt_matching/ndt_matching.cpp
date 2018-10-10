@@ -532,6 +532,7 @@ static void gnss_callback(const geometry_msgs::PoseStamped::ConstPtr& input)
   ros::Time current_gnss_time = input->header.stamp;
   static ros::Time previous_gnss_time = current_gnss_time;
 
+  // 只有在初始化或 ndt matching 匹配程度过低时才会作为当前位置的输入
   if ((_use_gnss == 1 && init_pos_set == 0) || fitness_score >= 500.0)
   {
     previous_pose.x = previous_gnss_pose.x;
@@ -743,6 +744,7 @@ static void odom_calc(ros::Time current_time)
 
 static void imu_calc(ros::Time current_time)
 {
+  // imu 计算里程计，注意其中位移的计算
   static ros::Time previous_time = current_time;
   double diff_time = (current_time - previous_time).toSec();
 
@@ -776,6 +778,7 @@ static void imu_calc(ros::Time current_time)
   current_velocity_imu_y += accY * diff_time;
   current_velocity_imu_z += accZ * diff_time;
 
+  // 这里的 offset 在每次位置更新时都会置 0 ，所以与 current_pose_imu.roll 的作用是不一样的
   offset_imu_roll += diff_imu_roll;
   offset_imu_pitch += diff_imu_pitch;
   offset_imu_yaw += diff_imu_yaw;

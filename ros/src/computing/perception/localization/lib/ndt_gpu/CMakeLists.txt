@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(ndt_gpu)
 
+add_compile_options(-mincoming-stack-boundary=2)
+
 find_package(catkin REQUIRED)
 find_package(PCL REQUIRED)
 find_package(CUDA)

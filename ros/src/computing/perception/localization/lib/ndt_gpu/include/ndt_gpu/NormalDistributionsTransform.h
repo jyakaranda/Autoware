@@ -44,7 +44,7 @@ protected:
 	void computeTransformation(const Eigen::Matrix<float, 4, 4> &guess);
 	double computeDerivatives(Eigen::Matrix<double, 6, 1> &score_gradient, Eigen::Matrix<double, 6, 6> &hessian,
 								float *trans_x, float *trans_y, float *trans_z,
-								int points_num, Eigen::Matrix<double, 6, 1> pose, bool compute_hessian = true);
+								int points_num, const Eigen::Matrix<double, 6, 1> &pose, bool compute_hessian = true);
 
 private:
 	//Copied from ndt.h
@@ -63,7 +63,7 @@ private:
 
 	void transformPointCloud(float *in_x, float *in_y, float *in_z,
 								float *out_x, float *out_y, float *out_z,
-								int points_number, Eigen::Matrix<float, 4, 4> transform);
+								int points_number, const Eigen::Matrix<float, 4, 4> &transform);
 
 	void computeAngleDerivatives(MatrixHost pose, bool compute_hessian = true);
 

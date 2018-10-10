@@ -10,6 +10,8 @@ GNormalDistributionsTransform::GNormalDistributionsTransform()
 {
 	//GRegistration::GRegistration();
 
+	std::cout << "Constructing GNormalDistributionsTransform." << std::endl;
+
 	gauss_d1_ = gauss_d2_ = 0;
 	outlier_ratio_ = 0.55;
 	step_size_ = 0.1;
@@ -750,7 +752,7 @@ __global__ void sumScore(double *score, int full_size, int half_size)
 
 double GNormalDistributionsTransform::computeDerivatives(Eigen::Matrix<double, 6, 1> &score_gradient, Eigen::Matrix<double, 6, 6> &hessian,
 														float *trans_x, float *trans_y, float *trans_z,
-														int points_num, Eigen::Matrix<double, 6, 1> pose, bool compute_hessian)
+														int points_num, const Eigen::Matrix<double, 6, 1> &pose, bool compute_hessian)
 {
 	MatrixHost p(6, 1);
 
@@ -1168,7 +1170,7 @@ __global__ void gpuTransform(float *in_x, float *in_y, float *in_z,
 
 void GNormalDistributionsTransform::transformPointCloud(float *in_x, float *in_y, float *in_z,
 														float *trans_x, float *trans_y, float *trans_z,
-														int points_number, Eigen::Matrix<float, 4, 4> transform)
+														int points_number, const Eigen::Matrix<float, 4, 4> &transform)
 {
 	Eigen::Transform<float, 3, Eigen::Affine> t(transform);
 

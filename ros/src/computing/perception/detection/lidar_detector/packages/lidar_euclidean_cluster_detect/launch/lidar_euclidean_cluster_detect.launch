@@ -1,6 +1,6 @@
 <!-- -->
 <launch>
-  <arg name="points_node" default="/points_raw" /><!--CHANGE THIS TO READ WHETHER FROM VSCAN OR POINTS_RAW -->
+  <arg name="points_node" default="/lslidar_point_cloud" /><!--CHANGE THIS TO READ WHETHER FROM VSCAN OR POINTS_RAW -->
   <arg name="remove_ground" default="true" />
   <arg name="downsample_cloud" default="false" /> <!-- Apply VoxelGrid Filter with the value given by "leaf_size"-->
   <arg name="leaf_size" default="0.1" /><!-- Voxel Grid Filter leaf size-->
@@ -19,13 +19,13 @@
   <arg name="cluster_merge_threshold" default="1.5" />
   <arg name="clustering_distance" default="0.75" />
 
-  <arg name="use_vector_map" default="true" />
+  <arg name="use_vector_map" default="false" />
   <arg name="vectormap_frame" default="map" />
   <arg name="wayarea_gridmap_topic" default="grid_map_wayarea" />
   <arg name="wayarea_gridmap_layer" default="wayarea" />
   <arg name="wayarea_no_road_value" default="255" />
 
-  <arg name="output_frame" default="velodyne" />
+  <arg name="output_frame" default="/map" />
 
   <arg name="remove_points_upto" default="0.0" />
 
@@ -34,6 +34,8 @@
   <arg name="use_multiple_thres" default="false" />
   <arg name="clustering_ranges" default="[15,30,45,60]" /><!-- Distances to segment pointcloud -->
   <arg name="clustering_distances" default="[0.5,1.1,1.6,2.1,2.6]" /><!-- Euclidean Clustering threshold distance for each segment -->
+
+
 
   <!-- rosrun lidar_tracker euclidean_cluster _points_node:="" -->
   <node pkg="lidar_euclidean_cluster_detect" type="lidar_euclidean_cluster_detect" name="lidar_euclidean_cluster_detect" output="screen">
@@ -68,4 +70,5 @@
     <remap from="/points_raw" to="/sync_drivers/points_raw" if="$(arg sync)" />
   </node>
 
+  <node pkg="tf" type="static_transform_publisher" name="static_tf" args="0 0 0 0 0 0 1 /map /base_link 0.1" />
 </launch>

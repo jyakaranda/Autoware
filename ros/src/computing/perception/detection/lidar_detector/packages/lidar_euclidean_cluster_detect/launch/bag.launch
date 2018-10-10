@@ -1,0 +1,11 @@
+<launch>
+
+  <node pkg="object_map" type="points2costmap" name="points2costmap">
+    <param name="points_topic" value="points_lanes" />
+    <param name="resolution" value="0.2" />
+    <param name="cell_width" value="400" />
+    <param name="cell_height" value="500" />
+    <param name="offset_x" value="20.0" />
+    <param name="offset_y" value="10.0" />
+  </node>
+</launch>

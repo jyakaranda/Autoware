@@ -1,6 +1,10 @@
 #ifndef GNDT_H_
 #define GNDT_H_
 
+#define EIGEN_DONT_ALIGN_STATICALLY 
+#define EIGEN_DONT_VECTORIZE
+#define EIGEN_DISABLE_UNALIGNED_ARRAY_ASSERT
+
 #include <cuda.h>
 #include <cuda_runtime.h>
 #include "Matrix.h"
@@ -45,6 +49,8 @@ public:
 	bool hasConverged() const;
 
 	virtual ~GRegistration();
+
+	EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 protected:
 
 	virtual void computeTransformation(const Eigen::Matrix<float, 4, 4> &guess);
